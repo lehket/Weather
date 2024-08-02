@@ -12,8 +12,8 @@ using Weather.Models;
 namespace Weather.Migrations
 {
     [DbContext(typeof(WeatherDbContext))]
-    [Migration("20240802041556_WeatherMigration")]
-    partial class WeatherMigration
+    [Migration("20240802180531_WeatherDbInitialMigration")]
+    partial class WeatherDbInitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -64,8 +64,11 @@ namespace Weather.Migrations
 
             modelBuilder.Entity("Weather.Models.Location", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<float>("Latitude")
                         .HasColumnType("real");
