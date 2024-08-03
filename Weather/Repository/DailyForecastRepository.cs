@@ -25,6 +25,11 @@ namespace Weather.Repository
 
         public async Task<DailyForecast> Add(DailyForecast forecast)
         {
+            if (!await LocationIsValid(forecast))
+            {
+                throw new InvalidDataException("Invalid Location ID");
+            }
+
             var result = _context.DailyForecasts.Add(forecast);
             await _context.SaveChangesAsync();
             return result.Entity;
@@ -32,6 +37,11 @@ namespace Weather.Repository
 
         public async Task<DailyForecast> Update(int id, DailyForecast forecast)
         {
+            if (!await LocationIsValid(forecast))
+            {
+                throw new InvalidDataException("Invalid Location ID");
+            }
+
             _context.Entry(forecast).State = EntityState.Modified;
 
             try
@@ -67,6 +77,14 @@ namespace Weather.Repository
             _context.DailyForecasts.Remove(forecast);
             await _context.SaveChangesAsync();
             return forecast;
+        }
+
+        private async Task<bool> LocationIsValid(DailyForecast forecast)
+        {
+            var locationsRepository = new LocationsRepository(_context);
+            var location = await locationsRepository.GetById(forecast.LocationId);
+
+            return location != null;
         }
     }
 }
