@@ -42,6 +42,20 @@ namespace Weather.Controllers
             return location;
         }
 
+        // GET: api/Locations/Baltimore
+        [HttpGet("{name}")]
+        public async Task<ActionResult<Location>> GetLocation(string name)
+        {
+            var location = await _locationsRepository.GetByName(name);
+
+            if (location == null)
+            {
+                return NotFound();
+            }
+
+            return location;
+        }
+
         // PUT: api/Locations/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

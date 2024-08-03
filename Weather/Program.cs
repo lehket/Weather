@@ -11,6 +11,7 @@ builder.Services.AddDbContext<WeatherDbContext>(options =>
 );
 builder.Services.AddScoped<ILocationsRepository, LocationsRepository>();
 builder.Services.AddScoped<IDailyForecastRepository, DailyForecastRepository>();
+builder.Services.AddScoped<ILoadForecastsRepository, LoadForecastsRepository>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

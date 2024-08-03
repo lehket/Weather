@@ -22,6 +22,11 @@ namespace Weather.Repository
             return await _context.Locations.FindAsync(id);
         }
 
+        public async Task<Location> GetByName(string name)
+        {
+            return await _context.Locations.Where(l => l.Name == name).FirstOrDefaultAsync();
+        }
+
         public async Task<Location> Add(Location location)
         {
             var result = _context.Locations.Add(location);
