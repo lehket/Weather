@@ -1,0 +1,48 @@
+WEATHER APPLICATION
+
+This application provides a RESTful API for creating and accessing weather data by location. Data is stored in a SQLServer database containing two tables:
+
+1. Locations: Stores locations based on latitude and longitude. Each location can be given a name for convenience
+
+2. DailyForecasts: Stores basic forecast information for locations in the Locations table based on a time range (start/end).
+
+
+PROJECT SETUP
+
+1. Clone the repository.
+2. Create a database named "Weather" in SQL Server.
+3. Run the SQL scripts provided in the "Sql Scripts" folder in the Weather project. These will create the required database tables. At this time, there are no stored procedures or other object to be created.
+4. Open the project in Visual Studio and then open the appsettings.json file.
+5. In appsettings.json, edit the DefaultConnection parameter to match the connection string for your SQLServer instance.
+
+
+RUNNING THE PROJECT
+
+Once setup is complete, the project can be run in the Visual Studio IDE. The project uses the Swagger UI to provide easy access for testing endpoints. Available endpoints are:
+
+1. GET: /api/DailyForecasts - Gets all forecasts for all locations
+2. POST: /api/DailyForecasts - Stores one forecast record
+3. GET: /api/DailyForecasts/{id} - Gets a specific forecast by ID
+4. PUT: /api/DailyForecasts/{id} - Updates data for the forecast with the specified ID
+5. DELETE: /api/DailyForecasts/{id} - Deletes a specific forecast by ID
+
+6. PUT: /api/LoadForecasts/{locationName} - Loads forecasts from weather.gov for a specified location name
+
+7. GET: /api/Locations - Gets all locations
+8. POST: /api/Locations - Stores one location record
+9. GET: /api/Locations/{id} - Gets a specific location by ID
+10. PUT: /api/Locations/{id} - Updates data for the location with the specified ID
+11. DELETE: /api/Locations/{id} - Deletes a specific location by ID
+12. GET: /api/Locations/{name} - Gets a specific location by location name
+
+
+NOTES
+
+There are several outstanding issues to be addressed. 
+
+1. Deleting a location can leave forecasts orphaned. There should be a foreign key relationship created on the location ID and a constraint preventing deletion of a location that has associated forecasts.
+
+2. The LoadForecasts endpoint does not currently check to see if data being loaded already exists. Prior to inserting data, the latest date for a location should be queried, an only forecasts with a later datetime stamp should be stored.
+
+3. The GET for DailyForecasts should only return seven days worth of data, not all data.
+

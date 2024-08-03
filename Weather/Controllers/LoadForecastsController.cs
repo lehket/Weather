@@ -5,6 +5,8 @@ using Weather.Repository;
 
 namespace Weather.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class LoadForecastsController : Controller
     {
         private readonly ILoadForecastsRepository _loadForecastsRepository;
