@@ -1,0 +1,24 @@
+version: '3.4'
+
+networks:
+    weatherNetwork:
+
+services:
+    SqlServerDb:
+            container_name: SqlServerContainer
+            image: mcr.microsoft.com/mssql/server:2017-latest
+            ports:
+                - 8002:1433
+            environment:
+                - ACCEPT_EULA=Y
+                - MSSQL_SA_PASSWORD=fet74$om7!
+    WebApi:
+            container_name: weather
+            image: ${DOCKER_REGISTRY-}weather
+            ports:
+                - 8001:80 
+            build:
+              context: .
+              dockerfile: Weater/Dockerfile
+            depends_on:
+                - SqlServerDb
